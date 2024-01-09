@@ -12,7 +12,7 @@ jobs:
     outputs:
       items: ${{ steps.trigger.outputs.items }}
     steps:
-      - uses: actionslaw/actionslaw-action@v1.2.2
+      - uses: actionslaw/actionslaw-action@v1.2.3
         id: trigger
         with:
           on: '
@@ -20,7 +20,8 @@ jobs:
               "activitypub": {
                 "user": "testgrislyeye",
                 "host": "toot.io",
-                "cutoff": "480"
+                "cutoff": "480",
+                "removeTrailingHashtags": "true"
               }
             }'
 
