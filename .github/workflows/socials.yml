@@ -30,6 +30,8 @@ jobs:
     strategy:
       matrix:
         items: ${{fromJSON(needs.actionslaw.outputs.items)}}
+        fail-fast: true
+        max-parallel: 1
     name: Print
     runs-on: ubuntu-latest
     steps:
@@ -53,6 +55,8 @@ jobs:
     strategy:
       matrix:
         items: ${{fromJSON(needs.actionslaw.outputs.items)}}
+        fail-fast: true
+        max-parallel: 1
     runs-on: ubuntu-latest
     steps:
       - uses: actions/cache/restore@v3
@@ -98,6 +102,8 @@ jobs:
     strategy:
       matrix:
         items: ${{fromJSON(needs.actionslaw.outputs.items)}}
+        fail-fast: true
+        max-parallel: 1
     runs-on: ubuntu-latest
     steps:
       - uses: actions/cache/restore@v3
