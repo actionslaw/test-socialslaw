@@ -29,9 +29,9 @@ jobs:
     if: ${{needs.actionslaw.outputs.items != '[]' && needs.actionslaw.outputs.items != ''}}
     strategy:
       fail-fast: true
+      max-parallel: 1
       matrix:
         items: ${{fromJSON(needs.actionslaw.outputs.items)}}
-        max-parallel: 1
     name: Print
     runs-on: ubuntu-latest
     steps:
@@ -54,9 +54,9 @@ jobs:
     if: ${{needs.actionslaw.outputs.items != '[]' && needs.actionslaw.outputs.items != ''}}
     strategy:
       fail-fast: true
+      max-parallel: 1
       matrix:
         items: ${{fromJSON(needs.actionslaw.outputs.items)}}
-        max-parallel: 1
     runs-on: ubuntu-latest
     steps:
       - uses: actions/cache/restore@v3
@@ -101,9 +101,9 @@ jobs:
     if: ${{needs.actionslaw.outputs.items != '[]' && needs.actionslaw.outputs.items != ''}}
     strategy:
       fail-fast: true
+      max-parallel: 1
       matrix:
         items: ${{fromJSON(needs.actionslaw.outputs.items)}}
-        max-parallel: 1
     runs-on: ubuntu-latest
     steps:
       - uses: actions/cache/restore@v3
