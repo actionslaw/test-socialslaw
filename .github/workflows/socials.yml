@@ -132,7 +132,7 @@ jobs:
           replyto: ${{ steps.read-history.outputs.reference }}
           media: ./media
           service: https://bsky.social
-          identifier: ric@grislyeye.com
+          identifier: ricardo@gladwell.me
           password: ${{ secrets.BLUESKY_PASSWORD }}
 
       - id: write-history
