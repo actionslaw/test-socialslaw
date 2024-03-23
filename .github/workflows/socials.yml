@@ -140,3 +140,23 @@ jobs:
         with:
           path: ./atposts.txt
           key: ${{ matrix.items.uri }}
+
+  tumblr:
+    needs: actionslaw
+    if: ${{needs.actionslaw.outputs.items != '[]' && needs.actionslaw.outputs.items != ''}}
+    strategy:
+      fail-fast: true
+      max-parallel: 1
+      matrix:
+        items: ${{fromJSON(needs.actionslaw.outputs.items)}}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: rg-wood/tumblr-post-action@v1
+        id: post
+        with:
+          text: ${{ matrix.items.message }}
+          consumer-key: ${{ secrets.TUMBLR_CONSUMER_API_KEY }}
+          consumer-secret: ${{ secrets.TUMBLR_CONSUMER_API_SECRET }}
+          access-token: ${{ secrets.TUMBLR_ACCESS_TOKEN }}
+          access-token-secret: ${{ secrets.TUMBLR_ACCESS_TOKEN_SECRET }}
+          blog-identifier: grislyeye-test.tumblr.com
