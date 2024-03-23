@@ -157,17 +157,24 @@ jobs:
           path: ./tumblr-posts.txt
           key: ${{ matrix.items.replyto }}
 
+      - uses: actions/cache/restore@v3
+        if: ${{matrix.items.media != ''}}
+        with:
+          path: ./media/**
+          key: ${{ matrix.items.uri }}
+
       - id: read-history
         run: |
           if test -f ./tumblr-posts.txt; then
             cat ./tumblr-posts.txt  >> $GITHUB_OUTPUT
           fi
 
-      - uses: actionslaw/tumblr-post-action@v1.1
+      - uses: actionslaw/tumblr-post-action@v1.2
         id: post
         with:
           text: ${{ matrix.items.message }}
           replyto: ${{ steps.read-history.outputs.reference }}
+          media: ./media
           consumer-key: ${{ secrets.TUMBLR_CONSUMER_API_KEY }}
           consumer-secret: ${{ secrets.TUMBLR_CONSUMER_API_SECRET }}
           access-token: ${{ secrets.TUMBLR_ACCESS_TOKEN }}
