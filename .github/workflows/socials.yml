@@ -151,7 +151,19 @@ jobs:
         items: ${{fromJSON(needs.actionslaw.outputs.items)}}
     runs-on: ubuntu-latest
     steps:
-      - uses: actionslaw/tumblr-post-action@v1
+      - uses: actions/cache/restore@v3
+        if: ${{matrix.items.replyto != ''}}
+        with:
+          path: ./tumblr-posts.txt
+          key: ${{ matrix.items.replyto }}
+
+      - id: read-history
+        run: |
+          if test -f ./tumblr-posts.txt; then
+            cat ./tumblr-posts.txt  >> $GITHUB_OUTPUT
+          fi
+
+      - uses: actionslaw/tumblr-post-action@v1.1
         id: post
         with:
           text: ${{ matrix.items.message }}
@@ -160,3 +172,11 @@ jobs:
           access-token: ${{ secrets.TUMBLR_ACCESS_TOKEN }}
           access-token-secret: ${{ secrets.TUMBLR_ACCESS_TOKEN_SECRET }}
           blog-identifier: grislyeye-test.tumblr.com
+
+      - id: write-history
+        run: echo 'reference=${{ steps.post.outputs.post-id }}' >> ./tumblr-posts.txt
+
+      - uses: actions/cache/save@v3
+        with:
+          path: ./tumblr-posts.txt
+          key: ${{ matrix.items.uri }}
