@@ -167,6 +167,7 @@ jobs:
         id: post
         with:
           text: ${{ matrix.items.message }}
+          replyto: ${{ steps.read-history.outputs.reference }}
           consumer-key: ${{ secrets.TUMBLR_CONSUMER_API_KEY }}
           consumer-secret: ${{ secrets.TUMBLR_CONSUMER_API_SECRET }}
           access-token: ${{ secrets.TUMBLR_ACCESS_TOKEN }}
