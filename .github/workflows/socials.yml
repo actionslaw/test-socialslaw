@@ -12,7 +12,7 @@ jobs:
     outputs:
       items: ${{ steps.trigger.outputs.items }}
     steps:
-      - uses: actionslaw/actionslaw-action@v3
+      - uses: actionslaw/actionslaw-action@v4
         id: trigger
         with:
           on: '
@@ -83,7 +83,7 @@ jobs:
         with:
           status: ${{ matrix.items.message }}
           replyto: ${{ steps.read-history.outputs.status }}
-          media: ./media
+          media: ./media/${{ matrix.items.key }}
           consumer-key: ${{ secrets.TWITTER_CONSUMER_API_KEY }}
           consumer-secret: ${{ secrets.TWITTER_CONSUMER_API_SECRET }}
           access-token: ${{ secrets.TWITTER_ACCESS_TOKEN }}
@@ -125,12 +125,12 @@ jobs:
             cat ./atposts.txt  >> $GITHUB_OUTPUT
           fi
 
-      - uses: rg-wood/bluesky-post-action@v1.2
+      - uses: rg-wood/bluesky-post-action@v2
         id: post
         with:
           text: ${{ matrix.items.message }}
           replyto: ${{ steps.read-history.outputs.reference }}
-          media: ./media
+          media: ./media/${{ matrix.items.key }}
           service: https://bsky.social
           identifier: ricardo@gladwell.me
           password: ${{ secrets.BLUESKY_PASSWORD }}
@@ -176,7 +176,7 @@ jobs:
         with:
           text: ${{ matrix.items.message }}
           replyto: ${{ steps.read-history.outputs.reference }}
-          media: ./media
+          media: ./media/${{ matrix.items.key }}
           tags: ${{ matrix.items.tags }}
           consumer-key: ${{ secrets.TUMBLR_CONSUMER_API_KEY }}
           consumer-secret: ${{ secrets.TUMBLR_CONSUMER_API_SECRET }}
