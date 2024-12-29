@@ -43,12 +43,14 @@ jobs:
           message: ${{matrix.items.message}}
           replyTo: ${{matrix.items.replyTo}}
           tags: ${{matrix.items.tags}}
+          media: ./media/${{ matrix.items.key }}
         run: |
           echo items: $items
           echo uri: $uri
           echo message: $message
           echo replyTo: $replyTo
           echo tags: $tags
+          echo media: $media
 
   twitter:
     needs: actionslaw
